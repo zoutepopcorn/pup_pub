@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>socket</h1>
+    <center>
+      <img id="qr" src="">
+    </center>
+    <script src="/js/socket.io.js"></script>
+    <script>
+      let socket = io.connect('http://localhost:3000');
+      console.log("socket");
+      socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+      });
+      socket.on('data', function (data) {
+        console.log(data);
+        if(data.qr) {
+          document.getElementById('qr').src = data.qr;
+        }
+        socket.emit('my other event', { my: 'data' });
+      });
+      socket.emit('qr', { my: 'data' });
+
+
+    </script>
+  </body>
+</html>
